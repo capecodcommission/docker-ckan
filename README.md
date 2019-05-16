@@ -45,6 +45,47 @@ To start the containers:
 
 	docker-compose up
 
+## CCC
+
+### Docker dev flow
+
+1. make a spot to hold your cloned project
+2. cd to above location and `git clone https://github.com/capecodcommission/docker-ckan.git`
+3. `cd docker-ckan`
+4. `cp .env.example .env`
+5. Follow instructions above to build images and then start the containers
+6. When you want to stop images, press CTRL + "c" key
+7. `docker-compose down`
+8. If no changes have been made to the code base, `docker-compose up`
+9. If changes have been made, re-build images `docker-compose build` and start the containers `docker-compose up`
+
+## Git flow
+
+1. ``git status`` -- this should return that you're on your feature branch (feature-working-on/INITIALS), if not ``git checkout feature-working-on/INITIALS)``
+2. ``git checkout dev``
+3. ``git pull origin dev`` -- this is essential and provides the up-to-date code base from the repository. if someone else has pushed changes since you last have pulled, you will now have those before updating.
+4. ``git checkout feature-working-on/INITIALS``
+5. Assure that the services run in your feature branch by stepping through 'Getting app running in docker containers'
+6. Alert others on the project that you're merging your feature into dev so as not to merge at the same time to avoid merge conflicts
+7. ``git rebase -i dev``
+8. If you have multiple commits, in the text editor that comes up, replace the letters "p" or words "pick" with "s" for "sqaush" next to the commits all the commits underneath the top ("oldest" or 1st commit in your sets of commit).
+9. If there are any conflicts, go through those: ``git add``, ``git rebase --continue`` until complete
+10. Once the terminal returns a successful rebase, ``git checkout dev``
+11. ``git checkout dev``
+12. ``git merge feature-working-on/INITIALS``
+13. Assure that the services run in your dev branch by stepping through 'Getting app running in docker containers'
+14. ``git status`` -- should return that you're 1 commit ahead of origin/dev
+15. ``git push origin dev``
+16. ``git status`` -- should return that you're on dev branch and that it's 'already up to date.' and pointing at repo dev branch
+17. ``git branch -D feature-working-on/INITIALS`` -- delete your local feature branch that you just merged into dev
+18. ``git checkout feature-working-on/INITIALS`` -- start over
+
+## Resources
+Create a sysadmin: https://docs.ckan.org/en/2.8/maintaining/getting-started.html#create-admin-user
+Customize look & feel w/ sysadmin: https://docs.ckan.org/en/2.8/sysadmin-guide.html#customizing-look-and-feel
+Docker-compose documentation: https://docs.ckan.org/en/2.8/maintaining/installing/install-from-docker-compose.html
+Template customization: https://docs.ckan.org/en/2.8/theming/templates.html?highlight=customizing
+
 ## Development mode
 
 To develop local extensions use the `docker-compose.dev.yml` file:
